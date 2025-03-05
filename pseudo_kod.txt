@@ -1,0 +1,147 @@
+
+struct position 
+    x 
+    y 
+
+struct bräde
+    tecken 
+    färg
+
+void rita brädet(bräde, fallande block, fallande blocks färg)
+    flytta markören till övre vänster hörn
+    rita topp raden + byt rad
+    loopa genom varje rad
+        rita kant 
+        loopa genom varje ruta på raden
+            om positionen finns i det fallande blocket
+                skriv ut fallande blockets färg
+                skriv ut #
+                återställ färg
+            annars
+                skriv färgen på brädet på den positionen
+                skriv ut tecken på brädet
+                återställ färg
+
+        rita kant + byt rad
+    rita botten raden
+
+bool skapa nytt fallande block(&fallande block, bräde, &fallande blocks färg)
+    skapa lista på tecken för varje form i tetris
+    välj ett random element i listan
+
+    ge det fallande blocket positioner och sätt färg på det fallande blocket beroende på vilken form som valdes
+
+    om blocket hamnar på en ockuperad positioner 
+        return false
+    
+    return true
+
+bool flytta fallande block (&fallande block, bräde, ändring i x, ändring i y)
+    skapa lista över de nya positionerna för blocket
+    (vill inte ändra orignal positionen eftersom en av de senare kan leda till felaktigt position och då måste man ändra tillbaka på tidigare positioner)
+    
+    loopa genom varje position i fallande block
+        om nuvarande position + angiven ändrings positionen hamnar utanför brädet
+            return false
+        om den hamnar på en ockuperad position
+            return false
+        lägg till ändrade positionen i listan med nya positioner 
+        
+    
+    om funktionen inte returnerat false = alla nya positioner hamnar på en ledig plats
+    loopa genom varje position i nya positioner
+        tilldela de nya positionerna till varje position i det fallande blockets
+
+void rotera block(&fallande block, bräde)
+    sätt den mittersta rutan i det fallande blocket som referens
+    spara hur de andra delarna ligger i förhållande till referensen
+    flytta de 4 positionerna i fallande block så att nya x positionen blir referensX - (gamla Y-referensY). 
+    Och y positionen blir referensY (gamla X-referensX)
+
+    loopa genom varje ny position
+        om block hamnar utanför brädet
+            flytta fallande block(fallande block, bräde, ett steg motsatt håll från kanten)
+        om det är kollision med redan liggande block
+            flytta block block(fallande block, bräde, ett steg vänster)
+            om det är kollision
+                flytta fallande block(fallande block, bräde, 2 steg höger (1 steg höger från ursprungsposition))
+                om det är kollision
+                    flytta tillbaka till ursprungsposition
+                    medan flytta block uppåt returnar false
+                        öka antalet steg den ska flytta uppåt
+
+rensa fulla linjer(bräde, &score)
+    skapa variabel som räknar hur många lines som blivit cleared
+    loopa varje rad	
+        skapa variabel som kollar om raden är full
+        loopa genom varje ruta i rad 
+            om en tom ruta hittas
+                sätt att rad är full till false
+        
+        om rad är full
+            ta bort raden från brädet   
+            flytta varje rad, ovanför raden som togs bort, ett steg neråt
+            antal rader som rensats ökar med 1
+
+    om antal rader om rensats samtidigt är 1
+        öka score med 100
+    om antal är 2
+        öka score med 300
+    on antal är 3
+        öka score med 500
+    om antal är 4 
+        öka score med 800
+
+main
+    skapa 10x16 bräde av både tecken och färg
+    fyll brädets tecken med ' ' och färg med default
+    skapa en array av 4 positioner som är varje position i det fallande blocket
+    skapa nytt fallande block
+    skapa variabel som räknar antalet loopar som gjorts
+
+    rita brädet(bräde, fallande block)
+
+    kör så länge det inte är gameover
+        om en knapp är tryckt
+            om pil höger
+                flytta fallande block (fallande block, bräde, 1 steg höger)
+            om pil vänster
+                flytta fallande block (fallande block, bräde, 1 steg vänster)
+            om pil upp
+                rotera block medurs(fallande block, bräde)
+            om pil neråt
+                skapa variabel som håller koll om blocket har hittat botten
+                medan block inte är längst ner
+                    flytta fallande block(fallande block, bräde, 1 steg neråt)
+                    om det inte går att flytta ett steg neråt
+                        lägg blocket på teckenbrädet och fallande blocks färgen på färgbrädet
+                        skapa nytt fallande blocket
+                        om det inte går att skapa nytt fallande block
+                            gameover = true
+                        block har kommit längst ner = true
+                    annars 
+                        öka score med 2
+                        
+        var x:onde loop
+            flytta fallande block(fallande block, bräde, ett steg neråt)
+            om det inte går att flytta det fallande blocket ett steg neråt
+                lägg blocket på teckenbrädet och fallande blocks färgen på färgbrädet
+                skapa nytt fallande block
+                om det inte går att skapa nytt fallande block
+                    gameover = true
+            annars
+                öka score med 1
+
+        rensa fulla linjer
+        
+        rita brädet
+
+        öka antalet loopar som gjorts med 1
+    
+    skriv ut gameover någonting någonting
+
+                    
+                    
+        
+
+
