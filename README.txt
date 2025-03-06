@@ -28,15 +28,13 @@ Hur används programmet?
     För att ladda om grafiken kan man pausa och starta igen
     
 Utmaningar
-    Ej full plan 
-    Bättre visuals, 
-    Placering på Hold och Next
-    Scoring system
+    Bättre visuals
+    Scoring system, t spins
     Tetrimino spawnar på planen och inte ovanför. 
     Delay på inputs om man vill hålla in
     Rotationer inte samma som vanliga tetris
     Loopar istället för bestämd sleep, olika snabb beroende på datorn
-
+    Delay när man släpper knappar IBLAND
 
 Vad härnäst?
 
